@@ -7,7 +7,7 @@ function getComputerChoice(){
 function getHumanChoice() {
         let answer
         let validInputs = ["rock", "paper", "scissors"]
-        
+
         while(!validInputs.includes(answer?.toLowerCase())){
             answer = prompt("Please enter either rock, paper or scissors!")
             if(!validInputs.includes(answer.toLowerCase())){
@@ -62,5 +62,5 @@ function playGame(){
     }
 }
 
-playGame()
+//playGame()
 
