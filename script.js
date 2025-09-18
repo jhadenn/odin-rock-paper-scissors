@@ -4,23 +4,22 @@ function getComputerChoice(){
     return choices[randomNumber]
 }
 
-function getHumanChoice() {
-        let answer
-        let validInputs = ["rock", "paper", "scissors"]
-
-        while(!validInputs.includes(answer?.toLowerCase())){
-            answer = prompt("Please enter either rock, paper or scissors!")
-            if(!validInputs.includes(answer.toLowerCase())){
-                alert("Invalid input. Please enter either rock, paper or scissors!")
-            }
-        }
-        return answer
-    
+function updateScore(result){
+    if(result == 'win'){ 
+        humanScore++;
+    } else if (result == "loss"){
+        computerScore++;
+    }
+    scoreEl.textContent = `Player: ${humanScore} — Computer: ${computerScore}`
 }
 
-function playRound(humanChoice, computerChoice, roundsPlayed){
+function updateChoiceImages(humanChoice, computerChoice){
+    versusImgs[0].src = `images/${humanChoice}.png`
+    versusImgs[1].src = `images/${computerChoice}.png`
+}
 
-    console.log(`Round ${roundsPlayed}`) 
+function playRound(humanChoice, computerChoice){
+
     if(humanChoice == computerChoice) {
         console.log("Tie!")
         return "tie"
@@ -37,31 +36,23 @@ function playRound(humanChoice, computerChoice, roundsPlayed){
 
 }
 
-function playGame(){
-    let roundsPlayed = 1
-    let humanScore = 0, computerScore = 0;
+let humanScore = 0, computerScore = 0;
+const scoreEl = document.getElementById('score')
+const versusContainer = document.querySelector('.container')
+const versusImgs = versusContainer.querySelectorAll('.versus-img')
 
-    while(roundsPlayed <= 5){
-        let outcome = playRound(getHumanChoice(), getComputerChoice(), roundsPlayed);
-        if(outcome == "win"){
-            humanScore++;
-        } else if (outcome == "loss") {
-            computerScore++;
-        } 
-        roundsPlayed++;
-    }
+const buttons = document.querySelectorAll('.buttons button')
 
-    console.log(`Final Score:\n You: ${humanScore} || Computer: ${computerScore}`)
+buttons.forEach(button => {
+    button.addEventListener('click', () => {
+        const humanChoice = button.id
+        const computerChoice = getComputerChoice()
+        const result = playRound(humanChoice, computerChoice)
 
-    if(humanScore == computerScore){
-        return console.log("It's a tie! GG")
-    } else if(humanScore < computerScore) {
-        return console.log("You lose! LOL!")
-    } else {
-        return console.log("You win! GG")
-    }
-}
-    
+        updateChoiceImages(humanChoice, computerChoice)
+        updateScore(result)
+    }); 
+});
 
-//playGame()
+
 

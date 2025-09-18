@@ -39,6 +39,11 @@ body {
     object-fit: contain;
 }
 
+.versus-img:not([src]) {
+    display: none;
+}
+
+
 .score {
     text-align: center;
     margin-bottom: 20px;
